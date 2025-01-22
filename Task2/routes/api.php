@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CountryController;
 
  Route::get('/user', function (Request $request) {
   return $request->user();
@@ -25,3 +26,6 @@ Route::post('/logout',[AuthController::class, 'logout'])->middleware('auth:sanct
 
 
 
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::resource('countries', CountryController::class)->except(['show']);
+});
