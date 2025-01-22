@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\AdminMiddleware;
 use App\Models\Country;
+use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class CountryController extends Controller
+class CountryController extends Controller implements HasMiddleware
 {
-    public function __construct()
-    {
-        $this->middleware('admin')->only(['update', 'destroy']);
+    public static function middleware()
+    { return [
+         new Middleware (Middleware:AdminMiddleware::class,except:['index','show'])
+    ];
     }
 
     public function index()
