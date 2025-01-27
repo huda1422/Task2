@@ -39,12 +39,12 @@ return [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
-        ],
+         ],
 
-    'api-admin' => [
-        'driver' => 'sanctum',
-        'provider' => 'admins',
-    ],
+         'api-admin' => [
+             'driver' => 'sanctum',
+             'provider' => 'admins',
+             ],
 
     ],
 

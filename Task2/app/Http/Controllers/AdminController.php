@@ -15,10 +15,10 @@ class AdminController extends Controller
             'password' => 'required|string',
         ]);
 
-        if (Auth::guard('admin')->attempt($request->only('email', 'password'))) {
+        if (Auth::guard('api-admin')->attempt($request->only('email', 'password'))) {
 
-            $admin = Auth::guard('admin')->user();
-            $token = $admin->createToken('admin-token')->plainTextToken;
+            $admin = Auth::guard('api-admin')->user();
+            $token = $admin->createToken('admin-token', ['role:admin'])->plainTextToken;
 
             return response()->json([
                 'message' => 'Login successful.',
@@ -31,12 +31,12 @@ class AdminController extends Controller
 
     public function profile()
     {
-        return response()->json(Auth::guard('admin')->user());
+        return response()->json(Auth::guard('api-admin')->user());
     }
 
     public function logout(Request $request)
     {
-        $request->user()->tokens()->delete();
+        Auth::guard('api-admin')->user()->tokens()->delete();
         return response()->json(['message' => 'Logout successful.']);
     }
 }
